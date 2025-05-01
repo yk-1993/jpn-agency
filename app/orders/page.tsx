@@ -10,11 +10,14 @@ import { format } from 'date-fns';
 import { zhTW, ja } from 'date-fns/locale';
 import { Loader2 } from 'lucide-react';
 import { t } from '@/lib/i18n';
+import { Database } from '@/types/supabase';
+
+type Order = Database['public']['Tables']['orders']['Row'];
 
 export default function OrdersPage() {
   const [language] = useAtom(languageAtom);
   const [loading, setLoading] = useState(true);
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     // In a real app, we'd fetch orders from the API
@@ -42,7 +45,7 @@ export default function OrdersPage() {
 
         {orders.length > 0 ? (
           <div className="space-y-4">
-            {orders.map((order: any) => (
+            {orders.map((order: Order) => (
               <Card key={order.id} className="overflow-hidden">
                 <CardContent className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -58,11 +61,9 @@ export default function OrdersPage() {
                         {t('orders.date', language)}
                       </p>
                       <p>
-                        {format(
-                          new Date(order.created_at),
-                          language === 'zn' ? 'yyyy年MM月dd日' : 'yyyy/MM/dd',
-                          { locale: language === 'zn' ? zhTW : ja }
-                        )}
+                        {format(new Date(order.created_at), t('common.dateFormat', language), {
+                          locale: language === 'zh' ? zhTW : ja,
+                        })}
                       </p>
                     </div>
 

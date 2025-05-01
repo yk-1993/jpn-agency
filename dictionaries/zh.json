@@ -31,7 +31,8 @@
   "events": {
     "allEvents": "所有活動",
     "noEventsFound": "未找到活動",
-    "checkBackSoon": "請稍後再回來查看，或聯繫我們了解新活動。"
+    "checkBackSoon": "請稍後再回來查看，或聯繫我們了解新活動。",
+    "eventName": "活動名稱"
   },
   "orders": {
     "title": "我的訂單",
@@ -48,7 +49,21 @@
       "paid": "已付款",
       "processing": "處理中",
       "completed": "已完成"
-    }
+    },
+    "notFound": "找不到訂單",
+    "notFoundDescription": "您要查找的訂單不存在或您無權查看。",
+    "viewAllOrders": "查看所有訂單",
+    "details": "訂單詳情",
+    "summary": "訂單摘要",
+    "tickets": "票券",
+    "quantity": "數量",
+    "customerInfo": "顧客資料",
+    "customerName": "姓名",
+    "customerEmail": "電子郵件",
+    "customerPhone": "電話",
+    "needHelp": "需要幫助？",
+    "helpQuestion": "對您的訂單有疑問？",
+    "completeOrder": "完成訂單"
   },
   "common": {
     "backToOrder": "返回訂單",
@@ -63,6 +78,11 @@
     "eventTicketing": "活動票務",
     "events": "活動",
     "myOrders": "我的訂單",
-    "switchToJapanese": "切換到日語"
+    "switchToJapanese": "切換到日語",
+    "back": "返回",
+    "supportChat": "支援對話",
+    "contactSupport": "聯繫支援",
+    "completeOrder": "完成訂單",
+    "dateFormat": "yyyy年MM月dd日"
   }
 }

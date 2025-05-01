@@ -46,7 +46,7 @@ export function EventCard({ event }: EventCardProps) {
             event.image_url ||
             'https://images.pexels.com/photos/3800541/pexels-photo-3800541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
           }
-          alt={language === 'zn' ? event.name : event.name_ja || event.name}
+          alt={language === 'zh' ? event.name : event.name_ja || event.name}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           width={1260}
           height={750}
@@ -55,7 +55,7 @@ export function EventCard({ event }: EventCardProps) {
       </div>
       <CardContent className="p-4">
         <h3 className="text-lg font-bold mb-1 line-clamp-2">
-          {language === 'zn' ? event.name : event.name_ja || event.name}
+          {language === 'zh' ? event.name : event.name_ja || event.name}
         </h3>
         <div className="flex items-center text-muted-foreground text-sm mb-2">
           <CalendarDays className="h-4 w-4 mr-1" />

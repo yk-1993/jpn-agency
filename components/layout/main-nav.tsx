@@ -11,7 +11,7 @@ export function MainNav() {
   const [language, setLanguage] = useAtom(languageAtom);
 
   const toggleLanguage = () => {
-    setLanguage(language === 'zn' ? 'ja' : 'zn');
+    setLanguage(language === 'zh' ? 'ja' : 'zh');
   };
 
   return (

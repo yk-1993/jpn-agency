@@ -8,7 +8,7 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noExplicitAny": "off",
+        "noExplicitAny": "error",
         "noAssignInExpressions": "off"
       },
       "style": {
@@ -22,7 +22,8 @@
       },
       "correctness": {
         "useExhaustiveDependencies": "off",
-        "noUnusedVariables": "off"
+        "noUnusedVariables": "error",
+        "noUndeclaredVariables": "error"
       },
       "a11y": {
         "useFocusableInteractive": "off",
@@ -46,7 +47,8 @@
       "quoteStyle": "single",
       "trailingCommas": "es5",
       "semicolons": "always"
-    }
+    },
+    "globals": ["React"]
   },
   "files": {
     "ignore": [".next", "node_modules", "public", "types", "**/*.d.ts"]

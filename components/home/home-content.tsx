@@ -7,9 +7,14 @@ import { t } from '@/lib/i18n';
 import { languageAtom } from '@/lib/store';
 import { useAtom } from 'jotai';
 import { Locale } from '@/i18n.config';
+import { Database } from '@/types/supabase';
+
+type Event = Database['public']['Tables']['events']['Row'] & {
+  ticket_types: Database['public']['Tables']['ticket_types']['Row'][];
+};
 
 interface HomeContentProps {
-  events: any[];
+  events: Event[];
 }
 
 export function HomeContent({ events }: HomeContentProps) {

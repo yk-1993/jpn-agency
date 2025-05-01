@@ -22,7 +22,6 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
   const router = useRouter();
   const [language] = useAtom(languageAtom);
   const [selection, setSelection] = useAtom(ticketSelectionAtom);
-  const [, setCurrentEvent] = useAtom(currentEventAtom);
 
   const handleQuantityChange = (ticketTypeId: string, quantity: number) => {
     // Ensure quantity is within valid range

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { createOrder, createOrderItems } from '@/lib/supabase';
 import { Database } from '@/types/supabase';
 
+type OrderItem = Database['public']['Tables']['order_items']['Insert'];
+
 export async function POST(request: Request) {
   try {
     const { orderData, orderItems } = await request.json();
@@ -11,7 +13,7 @@ export async function POST(request: Request) {
 
     // Create order items
     const items = await createOrderItems(
-      orderItems.map((item: any) => ({
+      orderItems.map((item: OrderItem) => ({
         ...item,
         order_id: order.id,
       }))
@@ -32,8 +34,11 @@ export async function POST(request: Request) {
         items,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Checkout error:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    );
   }
 }

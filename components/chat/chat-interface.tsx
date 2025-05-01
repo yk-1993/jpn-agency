@@ -10,6 +10,9 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Send } from 'lucide-react';
 import { format } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
+import { Database } from '@/types/supabase';
+
+type ChatMessage = Database['public']['Tables']['chat_messages']['Row'];
 
 interface ChatInterfaceProps {
   orderId: string;
@@ -17,7 +20,7 @@ interface ChatInterfaceProps {
 
 export function ChatInterface({ orderId }: ChatInterfaceProps) {
   const [language] = useAtom(languageAtom);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);

@@ -56,26 +56,18 @@ export async function getEvent(id: string) {
 }
 
 // Helper function to create an order
-export async function createOrder(orderData: any) {
+export async function createOrder(orderData: Database['public']['Tables']['orders']['Insert']) {
   const { data, error } = await supabase.from('orders').insert([orderData]).select().single();
-
-  if (error) {
-    console.error('Error creating order:', error);
-    throw error;
-  }
-
+  if (error) throw error;
   return data;
 }
 
 // Helper function to create order items
-export async function createOrderItems(orderItems: any[]) {
+export async function createOrderItems(
+  orderItems: Database['public']['Tables']['order_items']['Insert'][]
+) {
   const { data, error } = await supabase.from('order_items').insert(orderItems).select();
-
-  if (error) {
-    console.error('Error creating order items:', error);
-    throw error;
-  }
-
+  if (error) throw error;
   return data;
 }
 
@@ -118,14 +110,11 @@ export async function getChatMessages(orderId: string) {
 }
 
 // Helper function to send a chat message
-export async function sendChatMessage(message: any) {
+export async function sendChatMessage(
+  message: Database['public']['Tables']['chat_messages']['Insert']
+) {
   const { data, error } = await supabase.from('chat_messages').insert([message]).select().single();
-
-  if (error) {
-    console.error('Error sending chat message:', error);
-    throw error;
-  }
-
+  if (error) throw error;
   return data;
 }
 
