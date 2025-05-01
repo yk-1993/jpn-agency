@@ -1,10 +1,10 @@
-import { LanguageToggle } from '@/components/events/language-toggle';
-import { TicketSelection } from '@/components/events/ticket-selection';
-import { getEvent } from '@/lib/supabase';
-import { format } from 'date-fns';
-import { zhTW } from 'date-fns/locale';
-import { CalendarDays, Clock, MapPin } from 'lucide-react';
-import Image from 'next/image';
+import { LanguageToggle } from "@/components/Events/LanguageToggle";
+import { TicketSelection } from "@/components/Events/TicketSelection";
+import { getEvent } from "@/lib/supabase";
+import { format } from "date-fns";
+import { zhTW } from "date-fns/locale";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
+import Image from "next/image";
 
 export const revalidate = 60; // Revalidate every minute
 
@@ -20,13 +20,13 @@ export default async function EventPage({ params }: EventPageProps) {
   // Format date
   const eventDate = new Date(event.date);
   const formattedDate = {
-    en: format(eventDate, 'EEEE, MMMM d, yyyy'),
-    zh: format(eventDate, 'yyyy年MM月dd日 EEEE', { locale: zhTW }),
+    en: format(eventDate, "EEEE, MMMM d, yyyy"),
+    zh: format(eventDate, "yyyy年MM月dd日 EEEE", { locale: zhTW }),
   };
 
   const formattedTime = {
-    en: format(eventDate, 'h:mm a'),
-    zh: format(eventDate, 'HH:mm', { locale: zhTW }),
+    en: format(eventDate, "h:mm a"),
+    zh: format(eventDate, "HH:mm", { locale: zhTW }),
   };
 
   return (
@@ -42,7 +42,7 @@ export default async function EventPage({ params }: EventPageProps) {
               <Image
                 src={
                   event.image_url ||
-                  'https://images.pexels.com/photos/3800541/pexels-photo-3800541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+                  "https://images.pexels.com/photos/3800541/pexels-photo-3800541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 }
                 alt={event.name}
                 className="w-full h-full object-cover"
@@ -93,7 +93,12 @@ export default async function EventPage({ params }: EventPageProps) {
           </div>
 
           <div>
-            <TicketSelection ticketTypes={event.ticket_types} />
+            <TicketSelection
+              ticketTypes={event.ticket_types}
+              onSelect={(ticketTypeId, quantity) => {
+                console.log(`Selected ${quantity} tickets of type ${ticketTypeId}`);
+              }}
+            />
           </div>
         </div>
       </div>

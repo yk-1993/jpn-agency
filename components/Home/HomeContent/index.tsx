@@ -1,6 +1,6 @@
 "use client";
 
-import { EventCard } from "@/components/events/EventCard";
+import { EventCard } from "@/components/Events/EventCard";
 import { Button } from "@/components/ui/button";
 import { Locale } from "@/i18n.config";
 import { t } from "@/lib/i18n";
@@ -8,6 +8,7 @@ import { languageAtom } from "@/lib/store";
 import { Database } from "@/types/supabase";
 import { useAtom } from "jotai";
 import Link from "next/link";
+import { FC } from "react";
 
 type Event = Database["public"]["Tables"]["events"]["Row"] & {
   ticket_types: Database["public"]["Tables"]["ticket_types"]["Row"][];
@@ -17,7 +18,11 @@ interface HomeContentProps {
   events: Event[];
 }
 
-export function HomeContent({ events }: HomeContentProps) {
+/**
+ * ホームページのメインコンテンツコンポーネント
+ * イベント一覧と利用方法を表示します
+ */
+export const HomeContent: FC<HomeContentProps> = ({ events }) => {
   const [language] = useAtom<Locale>(languageAtom);
   const upcomingEvents = events.filter((event) => new Date(event.date) > new Date()).slice(0, 4);
 
@@ -114,4 +119,4 @@ export function HomeContent({ events }: HomeContentProps) {
       </section>
     </div>
   );
-}
+};
