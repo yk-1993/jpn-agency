@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "format:check": "biome format --check ."
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",
@@ -75,6 +78,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@types/negotiator": "^0.6.3"
   }
 }
