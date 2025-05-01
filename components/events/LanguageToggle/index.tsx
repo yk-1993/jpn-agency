@@ -4,16 +4,25 @@ import { Button } from "@/components/ui/button";
 import { languageAtom } from "@/lib/store";
 import { useAtom } from "jotai";
 import { Languages } from "lucide-react";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
-export function LanguageToggle() {
+/**
+ * 言語切り替えコンポーネント
+ * @returns 言語切り替えボタンのJSX要素
+ */
+export const LanguageToggle: FC = () => {
   const [language, setLanguage] = useAtom(languageAtom);
 
-  const toggleLanguage = () => {
+  /**
+   * 言語を切り替える
+   */
+  const toggleLanguage = (): void => {
     setLanguage(language === "zh" ? "ja" : "zh");
   };
 
-  // Update all elements with data-language attributes when language changes
+  /**
+   * 言語変更時にdata-language属性を持つ要素を更新
+   */
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll("[data-language-en]"));
     for (const element of elements) {
@@ -29,4 +38,4 @@ export function LanguageToggle() {
       {language === "zh" ? "日本語" : "中文"}
     </Button>
   );
-}
+};

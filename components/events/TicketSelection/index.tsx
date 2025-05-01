@@ -16,6 +16,7 @@ import { Database } from "@/types/supabase";
 import { useAtom } from "jotai";
 import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { FC } from "react";
 
 type TicketType = Database["public"]["Tables"]["ticket_types"]["Row"];
 
@@ -23,44 +24,70 @@ interface TicketSelectionProps {
   ticketTypes: TicketType[];
 }
 
-export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
+/**
+ * チケット選択コンポーネント
+ * @param props - チケットタイプの配列を含むプロパティ
+ * @returns チケット選択UIのJSX要素
+ */
+export const TicketSelection: FC<TicketSelectionProps> = ({ ticketTypes }) => {
   const router = useRouter();
   const [language] = useAtom(languageAtom);
   const [selection, setSelection] = useAtom(ticketSelectionAtom);
 
-  const handleQuantityChange = (ticketTypeId: string, quantity: number) => {
-    // Ensure quantity is within valid range
+  /**
+   * チケットの数量を変更する
+   * @param ticketTypeId - チケットタイプのID
+   * @param quantity - 新しい数量
+   */
+  const handleQuantityChange = (ticketTypeId: string, quantity: number): void => {
     const newQuantity = Math.max(0, Math.min(10, quantity));
-
     setSelection((prev) => ({
       ...prev,
       [ticketTypeId]: newQuantity,
     }));
   };
 
-  const incrementQuantity = (ticketTypeId: string) => {
+  /**
+   * チケットの数量を増やす
+   * @param ticketTypeId - チケットタイプのID
+   */
+  const incrementQuantity = (ticketTypeId: string): void => {
     const currentQuantity = selection[ticketTypeId] || 0;
     handleQuantityChange(ticketTypeId, currentQuantity + 1);
   };
 
-  const decrementQuantity = (ticketTypeId: string) => {
+  /**
+   * チケットの数量を減らす
+   * @param ticketTypeId - チケットタイプのID
+   */
+  const decrementQuantity = (ticketTypeId: string): void => {
     const currentQuantity = selection[ticketTypeId] || 0;
     handleQuantityChange(ticketTypeId, currentQuantity - 1);
   };
 
-  const getTotalPrice = () => {
+  /**
+   * 合計金額を計算する
+   * @returns 合計金額
+   */
+  const getTotalPrice = (): number => {
     return ticketTypes.reduce((total, ticket) => {
       const quantity = selection[ticket.id] || 0;
       return total + ticket.price * quantity;
     }, 0);
   };
 
-  const getTotalQuantity = () => {
+  /**
+   * 合計数量を計算する
+   * @returns 合計数量
+   */
+  const getTotalQuantity = (): number => {
     return Object.values(selection).reduce((sum, qty) => sum + qty, 0);
   };
 
-  const handleProceedToCheckout = () => {
-    // Store the ticket selection and proceed to checkout
+  /**
+   * チェックアウトページに進む
+   */
+  const handleProceedToCheckout = (): void => {
     if (getTotalQuantity() > 0) {
       router.push("/events/checkout");
     }
@@ -128,4 +155,4 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
       )}
     </div>
   );
-}
+};
