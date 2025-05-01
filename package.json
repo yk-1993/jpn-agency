@@ -11,7 +11,12 @@
     "check": "biome check .",
     "format:check": "biome format .",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "supabase": "npx supabase start -x vector",
+    "supabase:migrate": "npx supabase db push",
+    "migrate:create": "npx supabase migration new",
+    "supabase:reset": "npx supabase db reset",
+    "supabase:codegen": "npx supabase gen types typescript --linked --schema public > types/supabase.ts"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",
@@ -99,6 +104,7 @@
     "@types/react-dom": "^18",
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/ui": "^1.6.1",
+    "supabase": "^2.22.6",
     "typescript": "^5",
     "vitest": "^1.6.1"
   }
