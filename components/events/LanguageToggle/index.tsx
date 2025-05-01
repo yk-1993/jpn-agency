@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { t } from "@/lib/i18n";
 import { languageAtom } from "@/lib/store";
 import { useAtom } from "jotai";
@@ -8,6 +7,7 @@ import Image from "next/image";
 import jpFlag from "../../../public/flags/jp.png";
 import twFlag from "../../../public/flags/tw.png";
 import { FC } from "react";
+import { Button } from "@/components/ui/button";
 
 /**
  * 言語切り替えコンポーネント
@@ -42,7 +42,7 @@ export const LanguageToggle: FC = () => {
         alt={label}
         width={30}
         height={30}
-        className="object-cover border border-slate-200"
+        className="object-cover border border-slate-200 rounded-full"
       />
       <span>{label}</span>
     </Button>

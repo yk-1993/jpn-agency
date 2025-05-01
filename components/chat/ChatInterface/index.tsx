@@ -81,7 +81,7 @@ export const ChatInterface: FC<ChatInterfaceProps> = ({ orderId }) => {
     };
 
     scrollToBottom();
-  }, []);
+  }, [messages]); // Added messages as dependency to scroll when new messages arrive
 
   /**
    * メッセージを送信します
@@ -91,7 +91,13 @@ export const ChatInterface: FC<ChatInterfaceProps> = ({ orderId }) => {
 
     setSending(true);
     try {
-      await sendChatMessage(orderId, newMessage);
+      const messageData = {
+        order_id: orderId,
+        message: newMessage.trim(),
+        is_admin: false,
+      };
+      
+      await sendChatMessage(messageData);
       setNewMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -129,7 +135,7 @@ export const ChatInterface: FC<ChatInterfaceProps> = ({ orderId }) => {
             <div key={message.id} className="flex flex-col">
               <p className="text-sm text-muted-foreground">
                 {format(
-                  new Date(message.created_at),
+                  new Date(message.created_at || ''),
                   language === "ja" ? "yyyy年MM月dd日 HH:mm" : "yyyy-MM-dd HH:mm",
                   {
                     locale: language === "ja" ? undefined : zhTW,
