@@ -9,7 +9,9 @@
     "lint": "next lint",
     "format": "biome format --write .",
     "check": "biome check .",
-    "format:check": "biome format ."
+    "format:check": "biome format .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",
@@ -79,6 +81,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-interactions": "^8.6.12",
+    "@storybook/addon-links": "^8.6.12",
+    "@storybook/blocks": "^8.6.12",
+    "@storybook/nextjs": "^8.6.12",
+    "@storybook/react": "^8.6.12",
+    "@storybook/testing-library": "^0.2.2",
     "@types/negotiator": "^0.6.3"
   }
 }
