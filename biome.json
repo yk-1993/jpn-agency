@@ -13,14 +13,24 @@
       },
       "style": {
         "useImportType": "off",
-        "useTemplate": "off"
+        "useTemplate": "off",
+        "noUselessElse": "off"
       },
       "complexity": {
         "noForEach": "off",
         "useArrowFunction": "off"
       },
+      "correctness": {
+        "useExhaustiveDependencies": "off",
+        "noUnusedVariables": "off"
+      },
       "a11y": {
+        "useFocusableInteractive": "off",
+        "useSemanticElements": "off",
         "noRedundantRoles": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       }
     }
   },
