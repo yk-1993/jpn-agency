@@ -32,7 +32,14 @@
     "allEvents": "すべてのイベント",
     "noEventsFound": "イベントが見つかりません",
     "checkBackSoon": "後ほど再度確認するか、新しいイベントについてお問い合わせください。",
-    "eventName": "イベント名"
+    "eventName": "イベント名",
+    "location": "場所",
+    "availableSeats": "利用可能な席数",
+    "startingFrom": "最低価格",
+    "viewDetails": "詳細を見る",
+    "selectTickets": "チケットを選択",
+    "price": "価格",
+    "addToCart": "カートに追加"
   },
   "orders": {
     "title": "注文履歴",

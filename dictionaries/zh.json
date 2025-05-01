@@ -32,7 +32,14 @@
     "allEvents": "所有活動",
     "noEventsFound": "未找到活動",
     "checkBackSoon": "請稍後再回來查看，或聯繫我們了解新活動。",
-    "eventName": "活動名稱"
+    "eventName": "活動名稱",
+    "location": "場所",
+    "availableSeats": "可用座位數",
+    "startingFrom": "最低價格",
+    "viewDetails": "查看詳情",
+    "selectTickets": "選擇票券",
+    "price": "價格",
+    "addToCart": "加入購物車"
   },
   "orders": {
     "title": "我的訂單",
