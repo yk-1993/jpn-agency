@@ -1,6 +1,6 @@
 "use client";
 
-import { EventCard } from "@/components/Events/EventCard";
+import { EventCard } from "@/components/events/EventCard";
 import { Button } from "@/components/ui/button";
 import { Locale } from "@/i18n.config";
 import { t } from "@/lib/i18n";

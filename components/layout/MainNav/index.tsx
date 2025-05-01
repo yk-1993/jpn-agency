@@ -1,6 +1,6 @@
 "use client";
 
-import { LanguageToggle } from "@/components/Events/LanguageToggle";
+import { LanguageToggle } from "@/components/events/LanguageToggle";
 import { t } from "@/lib/i18n";
 import { languageAtom } from "@/lib/store";
 import { useAtom } from "jotai";

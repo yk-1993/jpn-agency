@@ -1,5 +1,5 @@
-import { LanguageToggle } from "@/components/Events/LanguageToggle";
-import { TicketSelection } from "@/components/Events/TicketSelection";
+import { LanguageToggle } from "@/components/events/LanguageToggle";
+import { TicketSelection } from "@/components/events/TicketSelection";
 import { getEvent } from "@/lib/supabase";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";

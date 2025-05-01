@@ -1,6 +1,6 @@
 "use client";
 
-import { EventCard } from "@/components/Events/EventCard";
+import { EventCard } from "@/components/events/EventCard";
 import { t } from "@/lib/i18n";
 import { languageAtom } from "@/lib/store";
 import { getEvents } from "@/lib/supabase";
