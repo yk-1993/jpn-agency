@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useParams } from "next/navigation";
-import { useAtom } from "jotai";
-import { languageAtom } from "@/lib/store";
-import { ChatInterface } from "@/components/chat/chat-interface";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { t } from "@/lib/i18n";
+import { useParams } from 'next/navigation';
+import { useAtom } from 'jotai';
+import { languageAtom } from '@/lib/store';
+import { ChatInterface } from '@/components/chat/chat-interface';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
+import { t } from '@/lib/i18n';
 
 export default function ChatPage() {
   const params = useParams();
@@ -21,14 +21,14 @@ export default function ChatPage() {
           <Link href={`/orders/${orderId}`}>
             <Button variant="ghost" className="pl-0">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              {t("common.backToOrder", language)}
+              {t('common.backToOrder', language)}
             </Button>
           </Link>
         </div>
 
-        <h1 className="text-2xl font-bold mb-4">{t("common.customerSupportChat", language)}</h1>
+        <h1 className="text-2xl font-bold mb-4">{t('common.customerSupportChat', language)}</h1>
 
-        <p className="mb-6 text-muted-foreground">{t("common.chatWithSupport", language)}</p>
+        <p className="mb-6 text-muted-foreground">{t('common.chatWithSupport', language)}</p>
 
         <ChatInterface orderId={orderId} />
       </div>

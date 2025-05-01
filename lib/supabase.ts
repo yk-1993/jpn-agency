@@ -28,7 +28,7 @@ export async function getEvents() {
 
       return {
         ...event,
-        ticket_types: ticketTypes || []
+        ticket_types: ticketTypes || [],
       };
     })
   );
@@ -38,10 +38,14 @@ export async function getEvents() {
 
 // Helper function to fetch a single event
 export async function getEvent(id: string) {
-  const { data, error } = await supabase.from('events').select(`
+  const { data, error } = await supabase
+    .from('events')
+    .select(`
     *,
     ticket_types (*)
-  `).eq('id', id).single();
+  `)
+    .eq('id', id)
+    .single();
 
   if (error) {
     console.error('Error fetching event:', error);
@@ -53,11 +57,7 @@ export async function getEvent(id: string) {
 
 // Helper function to create an order
 export async function createOrder(orderData: any) {
-  const { data, error } = await supabase
-    .from('orders')
-    .insert([orderData])
-    .select()
-    .single();
+  const { data, error } = await supabase.from('orders').insert([orderData]).select().single();
 
   if (error) {
     console.error('Error creating order:', error);
@@ -69,10 +69,7 @@ export async function createOrder(orderData: any) {
 
 // Helper function to create order items
 export async function createOrderItems(orderItems: any[]) {
-  const { data, error } = await supabase
-    .from('order_items')
-    .insert(orderItems)
-    .select();
+  const { data, error } = await supabase.from('order_items').insert(orderItems).select();
 
   if (error) {
     console.error('Error creating order items:', error);
@@ -122,11 +119,7 @@ export async function getChatMessages(orderId: string) {
 
 // Helper function to send a chat message
 export async function sendChatMessage(message: any) {
-  const { data, error } = await supabase
-    .from('chat_messages')
-    .insert([message])
-    .select()
-    .single();
+  const { data, error } = await supabase.from('chat_messages').insert([message]).select().single();
 
   if (error) {
     console.error('Error sending chat message:', error);

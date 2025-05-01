@@ -1,6 +1,6 @@
-import { getEvents } from "@/lib/supabase";
-import { HomeContent } from "@/components/home/home-content";
-import { Suspense } from "react";
+import { getEvents } from '@/lib/supabase';
+import { HomeContent } from '@/components/home/home-content';
+import { Suspense } from 'react';
 
 export const revalidate = 3600; // Revalidate every hour
 

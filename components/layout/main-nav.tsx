@@ -1,36 +1,41 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useAtom } from "jotai";
-import { languageAtom } from "@/lib/store";
-import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
-import { t } from "@/lib/i18n";
+import Link from 'next/link';
+import { useAtom } from 'jotai';
+import { languageAtom } from '@/lib/store';
+import { Button } from '@/components/ui/button';
+import { Globe } from 'lucide-react';
+import { t } from '@/lib/i18n';
 
 export function MainNav() {
   const [language, setLanguage] = useAtom(languageAtom);
 
   const toggleLanguage = () => {
-    setLanguage(language === "zn" ? "ja" : "zn");
+    setLanguage(language === 'zn' ? 'ja' : 'zn');
   };
 
   return (
     <div className="flex items-center justify-between py-4">
       <div className="flex items-center gap-6">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold">{t("common.eventTicketing", language)}</span>
+          <span className="text-xl font-bold">{t('common.eventTicketing', language)}</span>
         </Link>
         <nav className="hidden md:flex gap-6">
           <Link href="/events" className="text-sm font-medium transition-colors hover:text-primary">
-            {t("common.events", language)}
+            {t('common.events', language)}
           </Link>
           <Link href="/orders" className="text-sm font-medium transition-colors hover:text-primary">
-            {t("common.myOrders", language)}
+            {t('common.myOrders', language)}
           </Link>
         </nav>
       </div>
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={toggleLanguage} title={t("common.switchToJapanese", language)}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggleLanguage}
+          title={t('common.switchToJapanese', language)}
+        >
           <Globe className="h-5 w-5" />
         </Button>
       </div>

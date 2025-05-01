@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useAtom } from "jotai";
-import { languageAtom, ticketSelectionAtom, currentEventAtom } from "@/lib/store";
-import { Database } from "@/types/supabase";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Minus, Plus, Ticket } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { t } from "@/lib/i18n";
+import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { languageAtom, ticketSelectionAtom, currentEventAtom } from '@/lib/store';
+import { Database } from '@/types/supabase';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Minus, Plus, Ticket } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { t } from '@/lib/i18n';
 
-type TicketType = Database["public"]["Tables"]["ticket_types"]["Row"];
+type TicketType = Database['public']['Tables']['ticket_types']['Row'];
 
 interface TicketSelectionProps {
   ticketTypes: TicketType[];
@@ -58,13 +58,13 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
   const handleProceedToCheckout = () => {
     // Store the ticket selection and proceed to checkout
     if (getTotalQuantity() > 0) {
-      router.push("/events/checkout");
+      router.push('/events/checkout');
     }
   };
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-bold">{t("common.selectTickets", language)}</h3>
+      <h3 className="text-xl font-bold">{t('common.selectTickets', language)}</h3>
 
       <div className="space-y-4">
         {ticketTypes.map((ticket) => (
@@ -73,11 +73,18 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
               <div className="flex justify-between items-start">
                 <div>
                   <h4 className="font-medium text-lg">{ticket.name}</h4>
-                  {ticket.description && <p className="text-sm text-muted-foreground mt-1">{ticket.description}</p>}
+                  {ticket.description && (
+                    <p className="text-sm text-muted-foreground mt-1">{ticket.description}</p>
+                  )}
                   <p className="mt-2 font-medium">${(ticket.price / 100).toFixed(2)}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Button variant="outline" size="icon" onClick={() => decrementQuantity(ticket.id)} disabled={!selection[ticket.id]}>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => decrementQuantity(ticket.id)}
+                    disabled={!selection[ticket.id]}
+                  >
                     <Minus className="h-4 w-4" />
                   </Button>
 
@@ -85,13 +92,21 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
                     <span>{selection[ticket.id] || 0}</span>
                   </div>
 
-                  <Button variant="outline" size="icon" onClick={() => incrementQuantity(ticket.id)} disabled={(selection[ticket.id] || 0) >= ticket.available_seats || (selection[ticket.id] || 0) >= 10}>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => incrementQuantity(ticket.id)}
+                    disabled={
+                      (selection[ticket.id] || 0) >= ticket.available_seats ||
+                      (selection[ticket.id] || 0) >= 10
+                    }
+                  >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
 
-              <div className="mt-2 text-sm text-muted-foreground">{`${ticket.available_seats} ${t("common.seatsAvailable", language)}`}</div>
+              <div className="mt-2 text-sm text-muted-foreground">{`${ticket.available_seats} ${t('common.seatsAvailable', language)}`}</div>
             </CardContent>
           </Card>
         ))}
@@ -101,14 +116,14 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
         <Card>
           <CardContent className="p-4">
             <div className="flex justify-between items-center py-2">
-              <span className="font-medium">{t("common.total", language)}:</span>
+              <span className="font-medium">{t('common.total', language)}:</span>
               <span className="font-bold text-lg">${(getTotalPrice() / 100).toFixed(2)}</span>
             </div>
           </CardContent>
           <CardFooter className="p-4 pt-0">
             <Button className="w-full" size="lg" onClick={handleProceedToCheckout}>
               <Ticket className="mr-2 h-4 w-4" />
-              {t("common.proceedToCheckout", language)}
+              {t('common.proceedToCheckout', language)}
             </Button>
           </CardFooter>
         </Card>

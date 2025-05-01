@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useAtom } from "jotai";
-import { languageAtom } from "@/lib/store";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { format } from "date-fns";
-import { zhTW, ja } from "date-fns/locale";
-import { Loader2 } from "lucide-react";
-import { t } from "@/lib/i18n";
+import { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import { languageAtom } from '@/lib/store';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { format } from 'date-fns';
+import { zhTW, ja } from 'date-fns/locale';
+import { Loader2 } from 'lucide-react';
+import { t } from '@/lib/i18n';
 
 export default function OrdersPage() {
   const [language] = useAtom(languageAtom);
@@ -38,7 +38,7 @@ export default function OrdersPage() {
   return (
     <div className="py-8">
       <div className="container mx-auto px-4 sm:px-6">
-        <h1 className="text-3xl font-bold mb-6">{t("orders.title", language)}</h1>
+        <h1 className="text-3xl font-bold mb-6">{t('orders.title', language)}</h1>
 
         {orders.length > 0 ? (
           <div className="space-y-4">
@@ -47,17 +47,29 @@ export default function OrdersPage() {
                 <CardContent className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">{t("orders.orderId", language)}</p>
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {t('orders.orderId', language)}
+                      </p>
                       <p className="font-mono text-sm">{order.id}</p>
                     </div>
 
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">{t("orders.date", language)}</p>
-                      <p>{format(new Date(order.created_at), language === "zn" ? "yyyy年MM月dd日" : "yyyy/MM/dd", { locale: language === "zn" ? zhTW : ja })}</p>
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {t('orders.date', language)}
+                      </p>
+                      <p>
+                        {format(
+                          new Date(order.created_at),
+                          language === 'zn' ? 'yyyy年MM月dd日' : 'yyyy/MM/dd',
+                          { locale: language === 'zn' ? zhTW : ja }
+                        )}
+                      </p>
                     </div>
 
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">{t("orders.status", language)}</p>
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {t('orders.status', language)}
+                      </p>
                       <div
                         className={`
                         inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
@@ -69,7 +81,9 @@ export default function OrdersPage() {
                     </div>
 
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">{t("orders.total", language)}</p>
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {t('orders.total', language)}
+                      </p>
                       <p className="font-medium">${(order.total_amount / 100).toFixed(2)}</p>
                     </div>
                   </div>
@@ -77,7 +91,7 @@ export default function OrdersPage() {
                 <CardFooter className="bg-muted/10 px-6 py-3 flex justify-end">
                   <Link href={`/orders/${order.id}`}>
                     <Button variant="outline" size="sm">
-                      {t("orders.viewDetails", language)}
+                      {t('orders.viewDetails', language)}
                     </Button>
                   </Link>
                 </CardFooter>
@@ -86,10 +100,12 @@ export default function OrdersPage() {
           </div>
         ) : (
           <div className="text-center py-12 bg-muted/20 rounded-lg">
-            <h3 className="text-lg font-medium mb-2">{t("orders.noOrders", language)}</h3>
-            <p className="text-muted-foreground mb-6">{t("orders.noOrdersDescription", language)}</p>
+            <h3 className="text-lg font-medium mb-2">{t('orders.noOrders', language)}</h3>
+            <p className="text-muted-foreground mb-6">
+              {t('orders.noOrdersDescription', language)}
+            </p>
             <Link href="/events">
-              <Button>{t("orders.browseEvents", language)}</Button>
+              <Button>{t('orders.browseEvents', language)}</Button>
             </Link>
           </div>
         )}
@@ -100,15 +116,15 @@ export default function OrdersPage() {
 
 function getStatusColor(status: string) {
   switch (status) {
-    case "pending":
-      return "bg-yellow-100 text-yellow-800";
-    case "paid":
-      return "bg-blue-100 text-blue-800";
-    case "processing":
-      return "bg-purple-100 text-purple-800";
-    case "completed":
-      return "bg-green-100 text-green-800";
+    case 'pending':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'paid':
+      return 'bg-blue-100 text-blue-800';
+    case 'processing':
+      return 'bg-purple-100 text-purple-800';
+    case 'completed':
+      return 'bg-green-100 text-green-800';
     default:
-      return "bg-gray-100 text-gray-800";
+      return 'bg-gray-100 text-gray-800';
   }
 }

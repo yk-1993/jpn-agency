@@ -9,7 +9,7 @@
     "lint": "next lint",
     "format": "biome format --write .",
     "check": "biome check .",
-    "format:check": "biome format --check ."
+    "format:check": "biome format ."
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",

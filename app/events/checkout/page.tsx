@@ -1,15 +1,15 @@
-"use client"
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
-import { 
-  ticketSelectionAtom, 
+import {
+  ticketSelectionAtom,
   orderFormAtom,
   currentEventAtom,
   loadingAtom,
   errorAtom,
-  languageAtom
+  languageAtom,
 } from '@/lib/store';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -28,7 +28,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useAtom(loadingAtom);
   const [error, setError] = useAtom(errorAtom);
   const [language] = useAtom(languageAtom);
-  
+
   // Check if we have ticket selections, if not redirect back to events
   useEffect(() => {
     const totalQuantity = Object.values(selection).reduce((sum, qty) => sum + qty, 0);
@@ -36,35 +36,34 @@ export default function CheckoutPage() {
       router.push('/events');
     }
   }, [selection, router]);
-  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setOrderForm(prev => ({
+    setOrderForm((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
+
     try {
       // Validate form
       if (!orderForm.customer_name || !orderForm.customer_email || !orderForm.customer_phone) {
         throw new Error('Please fill in all required fields');
       }
-      
+
       // Create order (this would typically call your API endpoint)
       // For demo purposes, we're just showing success and redirecting
       toast({
         title: language === 'en' ? 'Order Created' : '訂單已建立',
-        description: language === 'en' 
-          ? 'Your order has been created successfully!' 
-          : '您的訂單已成功建立！',
+        description:
+          language === 'en' ? 'Your order has been created successfully!' : '您的訂單已成功建立！',
       });
-      
+
       // Reset selection
       // Redirect to a success page
       router.push('/events');
@@ -79,23 +78,17 @@ export default function CheckoutPage() {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="py-8">
       <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
-        <Button 
-          variant="ghost" 
-          className="mb-6" 
-          onClick={() => router.back()}
-        >
+        <Button variant="ghost" className="mb-6" onClick={() => router.back()}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {language === 'en' ? 'Back' : '返回'}
         </Button>
-        
-        <h1 className="text-3xl font-bold mb-6">
-          {language === 'en' ? 'Checkout' : '結帳'}
-        </h1>
-        
+
+        <h1 className="text-3xl font-bold mb-6">{language === 'en' ? 'Checkout' : '結帳'}</h1>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             <Card>
@@ -118,7 +111,7 @@ export default function CheckoutPage() {
                       required
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="customer_email">
                       {language === 'en' ? 'Email' : '電子郵件'} *
@@ -132,7 +125,7 @@ export default function CheckoutPage() {
                       required
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="customer_phone">
                       {language === 'en' ? 'Phone Number' : '電話號碼'} *
@@ -149,7 +142,7 @@ export default function CheckoutPage() {
               </CardContent>
             </Card>
           </div>
-          
+
           <div>
             <Card>
               <CardHeader className="border-b bg-muted/50">
@@ -173,9 +166,9 @@ export default function CheckoutPage() {
                     }
                     return null;
                   })}
-                  
+
                   <Separator />
-                  
+
                   <div className="flex justify-between font-bold">
                     <span>{language === 'en' ? 'Total' : '總計'}</span>
                     <span>$100.00</span>
@@ -183,8 +176,8 @@ export default function CheckoutPage() {
                 </div>
               </CardContent>
               <CardFooter className="p-6 pt-0">
-                <Button 
-                  className="w-full" 
+                <Button
+                  className="w-full"
                   size="lg"
                   type="submit"
                   form="checkout-form"
