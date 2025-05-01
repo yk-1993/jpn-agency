@@ -1,27 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/components/Events/LanguageToggle";
 import { t } from "@/lib/i18n";
 import { languageAtom } from "@/lib/store";
 import { useAtom } from "jotai";
-import { Globe } from "lucide-react";
 import Link from "next/link";
 import { FC } from "react";
 
 /**
- * メインナビゲーションコンポーネント
- * ヘッダーナビゲーションとして使用され、言語切り替え機能を含みます
+ * メインナビゲーション
  */
 export const MainNav: FC = () => {
-  const [language, setLanguage] = useAtom(languageAtom);
-
-  /**
-   * 言語を切り替えます
-   * 日本語と中国語を切り替えます
-   */
-  const toggleLanguage = (): void => {
-    setLanguage(language === "zh" ? "ja" : "zh");
-  };
+  const [language] = useAtom(languageAtom);
 
   return (
     <div className="flex items-center justify-between py-4">
@@ -39,14 +29,7 @@ export const MainNav: FC = () => {
         </nav>
       </div>
       <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleLanguage}
-          title={t("common.switchToJapanese", language)}
-        >
-          <Globe className="h-5 w-5" />
-        </Button>
+        <LanguageToggle />
       </div>
     </div>
   );
