@@ -5,12 +5,13 @@ import { useAtom } from 'jotai';
 import { languageAtom, ticketSelectionAtom, currentEventAtom } from '@/lib/store';
 import { Database } from '@/types/supabase';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Minus, Plus, Ticket } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { t } from '@/lib/i18n';
+import { Badge } from '@/components/ui/badge';
 
 type TicketType = Database['public']['Tables']['ticket_types']['Row'];
 
@@ -67,46 +68,22 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
 
       <div className="space-y-4">
         {ticketTypes.map((ticket) => (
-          <Card key={ticket.id} className="overflow-hidden">
-            <CardContent className="p-4">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h4 className="font-medium text-lg">{ticket.name}</h4>
-                  {ticket.description && (
-                    <p className="text-sm text-muted-foreground mt-1">{ticket.description}</p>
-                  )}
-                  <p className="mt-2 font-medium">${(ticket.price / 100).toFixed(2)}</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => decrementQuantity(ticket.id)}
-                    disabled={!selection[ticket.id]}
-                  >
-                    <Minus className="h-4 w-4" />
-                  </Button>
-
-                  <div className="w-10 text-center">
-                    <span>{selection[ticket.id] || 0}</span>
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => incrementQuantity(ticket.id)}
-                    disabled={
-                      (selection[ticket.id] || 0) >= ticket.available_seats ||
-                      (selection[ticket.id] || 0) >= 10
-                    }
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
+          <Card key={ticket.id} className="flex flex-col">
+            <CardHeader>
+              <CardTitle>{ticket.name}</CardTitle>
+              <CardDescription>{ticket.description}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold">¥{ticket.price.toLocaleString()}</span>
+                <Badge variant="secondary">
+                  {ticket.available_seats} seats available
+                </Badge>
               </div>
-
-              <div className="mt-2 text-sm text-muted-foreground">{`${ticket.available_seats} ${t('common.seatsAvailable', language)}`}</div>
             </CardContent>
+            <CardFooter>
+              <Button className="w-full">Select Ticket</Button>
+            </CardFooter>
           </Card>
         ))}
       </div>
