@@ -1,0 +1,68 @@
+{
+  "navigation": {
+    "home": "首頁",
+    "events": "活動",
+    "orders": "我的訂單"
+  },
+  "home": {
+    "title": "預訂精彩活動門票",
+    "description": "尋找並預訂您所在地區最好的活動門票。無論是音樂會、會議還是特別活動。",
+    "browseEvents": "瀏覽所有活動",
+    "featuredEvents": "精選活動",
+    "viewAll": "查看全部",
+    "noEvents": "目前沒有即將舉行的活動。",
+    "checkBack": "請稍後再回來查看，或聯繫我們了解新活動。",
+    "howItWorks": "使用方法",
+    "steps": {
+      "browse": {
+        "title": "瀏覽活動",
+        "description": "瀏覽我們精心策劃的活動列表，尋找您感興趣的活動。"
+      },
+      "select": {
+        "title": "選擇票券",
+        "description": "為選定的活動選擇票券類型和數量。"
+      },
+      "checkout": {
+        "title": "安全結帳",
+        "description": "通過我們的安全支付流程完成購買。"
+      }
+    }
+  },
+  "events": {
+    "allEvents": "所有活動",
+    "noEventsFound": "未找到活動",
+    "checkBackSoon": "請稍後再回來查看，或聯繫我們了解新活動。"
+  },
+  "orders": {
+    "title": "我的訂單",
+    "orderId": "訂單編號",
+    "date": "日期",
+    "status": "狀態",
+    "total": "總計",
+    "viewDetails": "查看詳情",
+    "noOrders": "未找到訂單",
+    "noOrdersDescription": "您尚未下任何訂單。",
+    "browseEvents": "瀏覽活動",
+    "statuses": {
+      "pending": "待處理",
+      "paid": "已付款",
+      "processing": "處理中",
+      "completed": "已完成"
+    }
+  },
+  "common": {
+    "backToOrder": "返回訂單",
+    "customerSupportChat": "客戶支援對話",
+    "chatWithSupport": "與我們的客戶支援團隊討論您的訂單。",
+    "selectTickets": "選擇票券",
+    "seatsAvailable": "個座位可用",
+    "total": "總計",
+    "proceedToCheckout": "前往結帳",
+    "from": "最低",
+    "viewDetails": "查看詳情",
+    "eventTicketing": "活動票務",
+    "events": "活動",
+    "myOrders": "我的訂單",
+    "switchToJapanese": "切換到日語"
+  }
+}

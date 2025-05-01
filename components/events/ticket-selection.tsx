@@ -1,0 +1,118 @@
+"use client";
+
+import { useState } from "react";
+import { useAtom } from "jotai";
+import { languageAtom, ticketSelectionAtom, currentEventAtom } from "@/lib/store";
+import { Database } from "@/types/supabase";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Minus, Plus, Ticket } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { t } from "@/lib/i18n";
+
+type TicketType = Database["public"]["Tables"]["ticket_types"]["Row"];
+
+interface TicketSelectionProps {
+  ticketTypes: TicketType[];
+}
+
+export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
+  const router = useRouter();
+  const [language] = useAtom(languageAtom);
+  const [selection, setSelection] = useAtom(ticketSelectionAtom);
+  const [, setCurrentEvent] = useAtom(currentEventAtom);
+
+  const handleQuantityChange = (ticketTypeId: string, quantity: number) => {
+    // Ensure quantity is within valid range
+    const newQuantity = Math.max(0, Math.min(10, quantity));
+
+    setSelection((prev) => ({
+      ...prev,
+      [ticketTypeId]: newQuantity,
+    }));
+  };
+
+  const incrementQuantity = (ticketTypeId: string) => {
+    const currentQuantity = selection[ticketTypeId] || 0;
+    handleQuantityChange(ticketTypeId, currentQuantity + 1);
+  };
+
+  const decrementQuantity = (ticketTypeId: string) => {
+    const currentQuantity = selection[ticketTypeId] || 0;
+    handleQuantityChange(ticketTypeId, currentQuantity - 1);
+  };
+
+  const getTotalPrice = () => {
+    return ticketTypes.reduce((total, ticket) => {
+      const quantity = selection[ticket.id] || 0;
+      return total + ticket.price * quantity;
+    }, 0);
+  };
+
+  const getTotalQuantity = () => {
+    return Object.values(selection).reduce((sum, qty) => sum + qty, 0);
+  };
+
+  const handleProceedToCheckout = () => {
+    // Store the ticket selection and proceed to checkout
+    if (getTotalQuantity() > 0) {
+      router.push("/events/checkout");
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <h3 className="text-xl font-bold">{t("common.selectTickets", language)}</h3>
+
+      <div className="space-y-4">
+        {ticketTypes.map((ticket) => (
+          <Card key={ticket.id} className="overflow-hidden">
+            <CardContent className="p-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h4 className="font-medium text-lg">{ticket.name}</h4>
+                  {ticket.description && <p className="text-sm text-muted-foreground mt-1">{ticket.description}</p>}
+                  <p className="mt-2 font-medium">${(ticket.price / 100).toFixed(2)}</p>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Button variant="outline" size="icon" onClick={() => decrementQuantity(ticket.id)} disabled={!selection[ticket.id]}>
+                    <Minus className="h-4 w-4" />
+                  </Button>
+
+                  <div className="w-10 text-center">
+                    <span>{selection[ticket.id] || 0}</span>
+                  </div>
+
+                  <Button variant="outline" size="icon" onClick={() => incrementQuantity(ticket.id)} disabled={(selection[ticket.id] || 0) >= ticket.available_seats || (selection[ticket.id] || 0) >= 10}>
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="mt-2 text-sm text-muted-foreground">{`${ticket.available_seats} ${t("common.seatsAvailable", language)}`}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {getTotalQuantity() > 0 && (
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex justify-between items-center py-2">
+              <span className="font-medium">{t("common.total", language)}:</span>
+              <span className="font-bold text-lg">${(getTotalPrice() / 100).toFixed(2)}</span>
+            </div>
+          </CardContent>
+          <CardFooter className="p-4 pt-0">
+            <Button className="w-full" size="lg" onClick={handleProceedToCheckout}>
+              <Ticket className="mr-2 h-4 w-4" />
+              {t("common.proceedToCheckout", language)}
+            </Button>
+          </CardFooter>
+        </Card>
+      )}
+    </div>
+  );
+}

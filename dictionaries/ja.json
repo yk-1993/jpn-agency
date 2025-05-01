@@ -1,0 +1,68 @@
+{
+  "navigation": {
+    "home": "ホーム",
+    "events": "イベント",
+    "orders": "注文履歴"
+  },
+  "home": {
+    "title": "イベントチケットを予約",
+    "description": "あなたの地域で開催される最高のイベントのチケットを見つけて予約しましょう。コンサート、カンファレンス、特別なイベントなど。",
+    "browseEvents": "すべてのイベントを見る",
+    "featuredEvents": "おすすめイベント",
+    "viewAll": "すべて見る",
+    "noEvents": "現在、開催予定のイベントはありません。",
+    "checkBack": "後ほど再度確認するか、新しいイベントについてお問い合わせください。",
+    "howItWorks": "ご利用方法",
+    "steps": {
+      "browse": {
+        "title": "イベントを探す",
+        "description": "厳選されたイベントリストから興味のあるイベントを見つけましょう。"
+      },
+      "select": {
+        "title": "チケットを選択",
+        "description": "選択したイベントのチケットタイプと枚数を選びましょう。"
+      },
+      "checkout": {
+        "title": "安全に決済",
+        "description": "安全な決済プロセスで購入を完了しましょう。"
+      }
+    }
+  },
+  "events": {
+    "allEvents": "すべてのイベント",
+    "noEventsFound": "イベントが見つかりません",
+    "checkBackSoon": "後ほど再度確認するか、新しいイベントについてお問い合わせください。"
+  },
+  "orders": {
+    "title": "注文履歴",
+    "orderId": "注文番号",
+    "date": "日付",
+    "status": "ステータス",
+    "total": "合計金額",
+    "viewDetails": "詳細を見る",
+    "noOrders": "注文履歴がありません",
+    "noOrdersDescription": "まだ注文がありません。",
+    "browseEvents": "イベントを探す",
+    "statuses": {
+      "pending": "処理待ち",
+      "paid": "支払い済み",
+      "processing": "処理中",
+      "completed": "完了"
+    }
+  },
+  "common": {
+    "backToOrder": "注文に戻る",
+    "customerSupportChat": "カスタマーサポートチャット",
+    "chatWithSupport": "カスタマーサポートチームと注文について話し合いましょう。",
+    "selectTickets": "チケットを選択",
+    "seatsAvailable": "席が利用可能",
+    "total": "合計",
+    "proceedToCheckout": "決済に進む",
+    "from": "最低",
+    "viewDetails": "詳細を見る",
+    "eventTicketing": "イベントチケット",
+    "events": "イベント",
+    "myOrders": "注文履歴",
+    "switchToJapanese": "日本語に切り替え"
+  }
+}
