@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
-import { languageAtom } from '@/lib/store';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { format } from 'date-fns';
-import { zhTW, ja } from 'date-fns/locale';
-import { Loader2 } from 'lucide-react';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { t } from '@/lib/i18n';
+import { languageAtom } from '@/lib/store';
 import { Database } from '@/types/supabase';
+import { format } from 'date-fns';
+import { ja, zhTW } from 'date-fns/locale';
+import { useAtom } from 'jotai';
+import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 type Order = Database['public']['Tables']['orders']['Row'];
 

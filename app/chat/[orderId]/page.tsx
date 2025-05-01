@@ -1,13 +1,13 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-import { useAtom } from 'jotai';
-import { languageAtom } from '@/lib/store';
 import { ChatInterface } from '@/components/chat/chat-interface';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import { t } from '@/lib/i18n';
+import { languageAtom } from '@/lib/store';
+import { useAtom } from 'jotai';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 export default function ChatPage() {
   const params = useParams();

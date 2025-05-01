@@ -1,18 +1,42 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { useAtom } from 'jotai';
-import { languageAtom } from '@/lib/store';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { MessageSquare, ArrowLeft, ExternalLink, Loader2 } from 'lucide-react';
-import Link from 'next/link';
-import { format } from 'date-fns';
-import { zhTW } from 'date-fns/locale';
-import { t } from '@/lib/i18n';
-import { Order, OrderItem } from '@/types/orders';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { t } from "@/lib/i18n";
+import { languageAtom } from "@/lib/store";
+import { format } from "date-fns";
+import { zhTW } from "date-fns/locale";
+import { useAtom } from "jotai";
+import { ArrowLeft, Loader2, MessageSquare } from "lucide-react";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+interface OrderItem {
+  id: string;
+  quantity: number;
+  unit_price: number;
+  ticket_type: {
+    id: string;
+    name: string;
+    name_ja: string;
+    name_zh: string;
+    price: number;
+    event_id: string;
+  };
+}
+
+interface Order {
+  id: string;
+  status: string;
+  total_amount: number;
+  created_at: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  order_items: OrderItem[];
+}
 
 export default function OrderDetailsPage() {
   const router = useRouter();
@@ -29,24 +53,24 @@ export default function OrderDetailsPage() {
       setLoading(false);
       setOrder({
         id: orderId,
-        status: 'paid',
+        status: "paid",
         total_amount: 10000, // $100.00
         created_at: new Date().toISOString(),
-        customer_name: 'John Doe',
-        customer_email: 'john@example.com',
-        customer_phone: '+123456789',
+        customer_name: "John Doe",
+        customer_email: "john@example.com",
+        customer_phone: "+123456789",
         order_items: [
           {
-            id: '1',
+            id: "1",
             quantity: 2,
             unit_price: 5000, // $50.00
             ticket_type: {
-              id: '1',
-              name: 'General Admission',
-              name_ja: '一般入場券',
-              name_zh: '一般入場券',
+              id: "1",
+              name: "General Admission",
+              name_ja: "一般入場券",
+              name_zh: "一般入場券",
               price: 5000,
-              event_id: 'event-123',
+              event_id: "event-123",
             },
           },
         ],
@@ -70,16 +94,16 @@ export default function OrderDetailsPage() {
         <div className="container mx-auto px-4 sm:px-6">
           <Button variant="ghost" className="mb-6" onClick={() => router.back()}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            {t('common.back', language)}
+            {t("common.back", language)}
           </Button>
 
           <div className="text-center py-12 bg-muted/20 rounded-lg">
-            <h1 className="text-2xl font-bold mb-4">{t('orders.notFound', language)}</h1>
+            <h1 className="text-2xl font-bold mb-4">{t("orders.notFound", language)}</h1>
             <p className="text-muted-foreground mb-6">
-              {t('orders.notFoundDescription', language)}
+              {t("orders.notFoundDescription", language)}
             </p>
             <Link href="/orders">
-              <Button>{t('orders.viewAllOrders', language)}</Button>
+              <Button>{t("orders.viewAllOrders", language)}</Button>
             </Link>
           </div>
         </div>
@@ -92,16 +116,16 @@ export default function OrderDetailsPage() {
       <div className="container mx-auto px-4 sm:px-6">
         <Button variant="ghost" className="mb-6" onClick={() => router.back()}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {t('common.back', language)}
+          {t("common.back", language)}
         </Button>
 
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">{t('orders.details', language)}</h1>
+          <h1 className="text-3xl font-bold">{t("orders.details", language)}</h1>
 
           <Link href={`/chat/${order.id}`}>
             <Button>
               <MessageSquare className="mr-2 h-4 w-4" />
-              {t('common.supportChat', language)}
+              {t("common.supportChat", language)}
             </Button>
           </Link>
         </div>
@@ -111,7 +135,7 @@ export default function OrderDetailsPage() {
             <Card>
               <CardHeader className="border-b bg-muted/50">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-semibold">{t('orders.summary', language)}</h2>
+                  <h2 className="text-xl font-semibold">{t("orders.summary", language)}</h2>
                   <div
                     className={`
                     inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
@@ -127,18 +151,18 @@ export default function OrderDetailsPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">
-                        {t('orders.orderId', language)}
+                        {t("orders.orderId", language)}
                       </p>
                       <p className="font-mono text-sm">{order.id}</p>
                     </div>
 
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">
-                        {t('orders.date', language)}
+                        {t("orders.date", language)}
                       </p>
                       <p>
-                        {format(new Date(order.created_at), t('common.dateFormat', language), {
-                          locale: language === 'zh' ? zhTW : undefined,
+                        {format(new Date(order.created_at), t("common.dateFormat", language), {
+                          locale: language === "zh" ? zhTW : undefined,
                         })}
                       </p>
                     </div>
@@ -146,14 +170,14 @@ export default function OrderDetailsPage() {
 
                   <Separator />
 
-                  <h3 className="font-medium">{t('orders.tickets', language)}</h3>
+                  <h3 className="font-medium">{t("orders.tickets", language)}</h3>
 
                   {order.order_items.map((item: OrderItem) => (
                     <div key={item.id} className="flex justify-between">
                       <div>
                         <p className="font-medium">{item.ticket_type.name}</p>
                         <p className="text-sm text-muted-foreground">
-                          {t('orders.quantity', language)}: {item.quantity}
+                          {t("orders.quantity", language)}: {item.quantity}
                         </p>
                       </div>
                       <p className="font-medium">
@@ -165,7 +189,7 @@ export default function OrderDetailsPage() {
                   <Separator />
 
                   <div className="flex justify-between font-bold text-lg">
-                    <span>{t('orders.total', language)}</span>
+                    <span>{t("orders.total", language)}</span>
                     <span>${(order.total_amount / 100).toFixed(2)}</span>
                   </div>
                 </div>
@@ -176,27 +200,27 @@ export default function OrderDetailsPage() {
           <div>
             <Card>
               <CardHeader className="border-b bg-muted/50">
-                <h2 className="text-xl font-semibold">{t('orders.customerInfo', language)}</h2>
+                <h2 className="text-xl font-semibold">{t("orders.customerInfo", language)}</h2>
               </CardHeader>
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">
-                      {t('orders.customerName', language)}
+                      {t("orders.customerName", language)}
                     </p>
                     <p>{order.customer_name}</p>
                   </div>
 
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">
-                      {t('orders.customerEmail', language)}
+                      {t("orders.customerEmail", language)}
                     </p>
                     <p>{order.customer_email}</p>
                   </div>
 
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">
-                      {t('orders.customerPhone', language)}
+                      {t("orders.customerPhone", language)}
                     </p>
                     <p>{order.customer_phone}</p>
                   </div>
@@ -207,16 +231,16 @@ export default function OrderDetailsPage() {
             <div className="mt-6">
               <Card>
                 <CardHeader className="border-b bg-muted/50">
-                  <h2 className="text-xl font-semibold">{t('orders.needHelp', language)}</h2>
+                  <h2 className="text-xl font-semibold">{t("orders.needHelp", language)}</h2>
                 </CardHeader>
                 <CardContent className="p-6">
                   <p className="text-sm text-muted-foreground mb-4">
-                    {t('orders.helpQuestion', language)}
+                    {t("orders.helpQuestion", language)}
                   </p>
                   <Link href={`/chat/${order.id}`}>
                     <Button className="w-full">
                       <MessageSquare className="mr-2 h-4 w-4" />
-                      {t('common.contactSupport', language)}
+                      {t("common.contactSupport", language)}
                     </Button>
                   </Link>
                 </CardContent>
@@ -228,7 +252,7 @@ export default function OrderDetailsPage() {
         <div className="mt-6">
           <Card>
             <CardHeader className="border-b bg-muted/50">
-              <h2 className="text-xl font-semibold">{t('orders.completeOrder', language)}</h2>
+              <h2 className="text-xl font-semibold">{t("orders.completeOrder", language)}</h2>
             </CardHeader>
             <CardContent className="p-6">
               <Button
@@ -239,7 +263,7 @@ export default function OrderDetailsPage() {
                 disabled={loading}
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {t('orders.completeOrder', language)}
+                {t("orders.completeOrder", language)}
               </Button>
             </CardContent>
           </Card>
@@ -251,43 +275,43 @@ export default function OrderDetailsPage() {
 
 function getStatusColor(status: string) {
   switch (status) {
-    case 'pending':
-      return 'bg-yellow-100 text-yellow-800';
-    case 'paid':
-      return 'bg-blue-100 text-blue-800';
-    case 'processing':
-      return 'bg-purple-100 text-purple-800';
-    case 'completed':
-      return 'bg-green-100 text-green-800';
+    case "pending":
+      return "bg-yellow-100 text-yellow-800";
+    case "paid":
+      return "bg-blue-100 text-blue-800";
+    case "processing":
+      return "bg-purple-100 text-purple-800";
+    case "completed":
+      return "bg-green-100 text-green-800";
     default:
-      return 'bg-gray-100 text-gray-800';
+      return "bg-gray-100 text-gray-800";
   }
 }
 
-function getStatusText(status: string, language: 'ja' | 'zh') {
-  if (language === 'zh') {
+function getStatusText(status: string, language: "ja" | "zh") {
+  if (language === "zh") {
     switch (status) {
-      case 'pending':
-        return '待處理';
-      case 'paid':
-        return '已付款';
-      case 'processing':
-        return '處理中';
-      case 'completed':
-        return '已完成';
+      case "pending":
+        return "待處理";
+      case "paid":
+        return "已付款";
+      case "processing":
+        return "處理中";
+      case "completed":
+        return "已完成";
       default:
         return status;
     }
   } else {
     switch (status) {
-      case 'pending':
-        return '処理待ち';
-      case 'paid':
-        return '支払い済み';
-      case 'processing':
-        return '処理中';
-      case 'completed':
-        return '完了';
+      case "pending":
+        return "処理待ち";
+      case "paid":
+        return "支払い済み";
+      case "processing":
+        return "処理中";
+      case "completed":
+        return "完了";
       default:
         return status;
     }

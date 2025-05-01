@@ -1,13 +1,13 @@
 'use client';
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { EventCard } from '@/components/events/event-card';
+import { Button } from '@/components/ui/button';
+import { Locale } from '@/i18n.config';
 import { t } from '@/lib/i18n';
 import { languageAtom } from '@/lib/store';
-import { useAtom } from 'jotai';
-import { Locale } from '@/i18n.config';
 import { Database } from '@/types/supabase';
+import { useAtom } from 'jotai';
+import Link from 'next/link';
 
 type Event = Database['public']['Tables']['events']['Row'] & {
   ticket_types: Database['public']['Tables']['ticket_types']['Row'][];

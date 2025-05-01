@@ -1,5 +1,5 @@
-import { atom } from 'jotai';
 import { Database } from '@/types/supabase';
+import { atom } from 'jotai';
 
 // Store the selected ticket quantities
 export const ticketSelectionAtom = atom<Record<string, number>>({});

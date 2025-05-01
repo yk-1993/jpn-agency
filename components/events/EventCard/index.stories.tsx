@@ -1,6 +1,6 @@
+import { Database } from '@/types/supabase';
 import type { Meta, StoryObj } from '@storybook/react';
 import { EventCard } from './index';
-import { Database } from '@/types/supabase';
 
 const meta: Meta<typeof EventCard> = {
   title: 'Events/EventCard',

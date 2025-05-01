@@ -1,9 +1,9 @@
+import { LanguageToggle } from '@/components/events/language-toggle';
+import { TicketSelection } from '@/components/events/ticket-selection';
+import { getEvent } from '@/lib/supabase';
 import { format } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
-import { getEvent } from '@/lib/supabase';
-import { TicketSelection } from '@/components/events/ticket-selection';
 import { CalendarDays, Clock, MapPin } from 'lucide-react';
-import { LanguageToggle } from '@/components/events/language-toggle';
 import Image from 'next/image';
 
 export const revalidate = 60; // Revalidate every minute

@@ -1,6 +1,6 @@
-import { Locale } from '@/i18n.config';
-import zhTranslations from '@/dictionaries/zh.json';
 import jaTranslations from '@/dictionaries/ja.json';
+import zhTranslations from '@/dictionaries/zh.json';
+import { Locale } from '@/i18n.config';
 
 type Translations = {
   [key: string]: string | Translations;

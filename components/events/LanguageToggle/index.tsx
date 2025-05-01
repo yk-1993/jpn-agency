@@ -1,36 +1,30 @@
-'use client';
+"use client";
 
-import { useAtom } from 'jotai';
-import { useEffect } from 'react';
-import { languageAtom } from '@/lib/store';
-import { Button } from '@/components/ui/button';
-import { Globe } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { languageAtom } from "@/lib/store";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
 export function LanguageToggle() {
   const [language, setLanguage] = useAtom(languageAtom);
 
   const toggleLanguage = () => {
-    setLanguage(language === 'zh' ? 'ja' : 'zh');
+    setLanguage(language === "zh" ? "ja" : "zh");
   };
 
   // Update all elements with data-language attributes when language changes
   useEffect(() => {
-    document.querySelectorAll('[data-language-en]').forEach((element) => {
+    const elements = Array.from(document.querySelectorAll("[data-language-en]"));
+    for (const element of elements) {
       if (element instanceof HTMLElement) {
-        element.innerText = element.dataset[`language${language.toUpperCase()}`] || '';
+        element.innerText = element.dataset[`language${language.toUpperCase()}`] || "";
       }
-    });
+    }
   }, [language]);
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={toggleLanguage}
-      className="flex items-center gap-2"
-    >
-      <Globe className="h-4 w-4" />
-      {language === 'zh' ? '日本語' : '中文'}
+    <Button variant="outline" size="sm" onClick={toggleLanguage} className="w-[60px]">
+      {language === "zh" ? "日本語" : "中文"}
     </Button>
   );
 }

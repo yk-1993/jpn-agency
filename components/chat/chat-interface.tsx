@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { useAtom } from 'jotai';
-import { languageAtom } from '@/lib/store';
-import { getChatMessages, sendChatMessage, supabase } from '@/lib/supabase';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Loader2, Send } from 'lucide-react';
-import { format } from 'date-fns';
-import { zhTW } from 'date-fns/locale';
-import { Database } from '@/types/supabase';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { languageAtom } from "@/lib/store";
+import { getChatMessages, sendChatMessage, supabase } from "@/lib/supabase";
+import { Database } from "@/types/supabase";
+import { format } from "date-fns";
+import { zhTW } from "date-fns/locale";
+import { useAtom } from "jotai";
+import { Loader2, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-type ChatMessage = Database['public']['Tables']['chat_messages']['Row'];
+type ChatMessage = Database["public"]["Tables"]["chat_messages"]["Row"];
 
 interface ChatInterfaceProps {
   orderId: string;
@@ -21,7 +21,7 @@ interface ChatInterfaceProps {
 export function ChatInterface({ orderId }: ChatInterfaceProps) {
   const [language] = useAtom(languageAtom);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ export function ChatInterface({ orderId }: ChatInterfaceProps) {
         const data = await getChatMessages(orderId);
         setMessages(data);
       } catch (error) {
-        console.error('Error fetching messages:', error);
+        console.error("Error fetching messages:", error);
       } finally {
         setLoading(false);
       }
@@ -46,16 +46,26 @@ export function ChatInterface({ orderId }: ChatInterfaceProps) {
     const channel = supabase
       .channel(`chat:${orderId}`)
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'chat_messages',
+          event: "INSERT",
+          schema: "public",
+          table: "chat_messages",
           filter: `order_id=eq.${orderId}`,
         },
         (payload) => {
-          setMessages((prev) => [...prev, payload.new]);
-        }
+          if (payload.new && typeof payload.new === "object") {
+            const newMessage: ChatMessage = {
+              id: String(payload.new.id),
+              order_id: String(payload.new.order_id),
+              user_id: payload.new.user_id ? String(payload.new.user_id) : null,
+              is_admin: Boolean(payload.new.is_admin),
+              message: String(payload.new.message),
+              created_at: String(payload.new.created_at),
+            };
+            setMessages((prev) => [...prev, newMessage]);
+          }
+        },
       )
       .subscribe();
 
@@ -66,8 +76,8 @@ export function ChatInterface({ orderId }: ChatInterfaceProps) {
 
   // Scroll to bottom when messages change
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,9 +91,9 @@ export function ChatInterface({ orderId }: ChatInterfaceProps) {
         is_admin: false, // For customer messages
       });
 
-      setNewMessage('');
+      setNewMessage("");
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
     }
   };
 
@@ -99,7 +109,7 @@ export function ChatInterface({ orderId }: ChatInterfaceProps) {
     <Card className="h-[500px] flex flex-col">
       <CardHeader className="border-b bg-muted/50 py-3">
         <h3 className="text-lg font-semibold">
-          {language === 'en' ? 'Customer Support' : '客戶支援'}
+          {language === "ja" ? "カスタマーサポート" : "客戶支援"}
         </h3>
       </CardHeader>
 
@@ -107,30 +117,30 @@ export function ChatInterface({ orderId }: ChatInterfaceProps) {
         <div className="space-y-4">
           {messages.length === 0 ? (
             <div className="text-center py-10 text-muted-foreground">
-              {language === 'en'
-                ? 'No messages yet. Start a conversation!'
-                : '還沒有訊息。開始對話吧！'}
+              {language === "ja"
+                ? "まだメッセージはありません。会話を始めましょう！"
+                : "還沒有訊息。開始對話吧！"}
             </div>
           ) : (
             messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex ${msg.is_admin ? 'justify-start' : 'justify-end'}`}
+                className={`flex ${msg.is_admin ? "justify-start" : "justify-end"}`}
               >
                 <div
                   className={`
                     max-w-[80%] rounded-lg px-4 py-2
                     ${
                       msg.is_admin
-                        ? 'bg-muted text-foreground'
-                        : 'bg-primary text-primary-foreground'
+                        ? "bg-muted text-foreground"
+                        : "bg-primary text-primary-foreground"
                     }
                   `}
                 >
                   <p className="break-words">{msg.message}</p>
                   <p className="text-xs opacity-70 mt-1 text-right">
-                    {format(new Date(msg.created_at), language === 'en' ? 'h:mm a' : 'HH:mm', {
-                      locale: language === 'zh' ? zhTW : undefined,
+                    {format(new Date(msg.created_at), language === "ja" ? "HH:mm" : "HH:mm", {
+                      locale: language === "zh" ? zhTW : undefined,
                     })}
                   </p>
                 </div>
@@ -146,7 +156,7 @@ export function ChatInterface({ orderId }: ChatInterfaceProps) {
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder={language === 'en' ? 'Type a message...' : '輸入訊息...'}
+            placeholder={language === "ja" ? "メッセージを入力..." : "輸入訊息..."}
             className="flex-1"
           />
           <Button type="submit" size="icon">

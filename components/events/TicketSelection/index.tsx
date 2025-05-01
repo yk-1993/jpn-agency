@@ -1,19 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useAtom } from 'jotai';
-import { languageAtom, ticketSelectionAtom, currentEventAtom } from '@/lib/store';
-import { Database } from '@/types/supabase';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Minus, Plus, Ticket } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { t } from '@/lib/i18n';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { t } from "@/lib/i18n";
+import { languageAtom, ticketSelectionAtom } from "@/lib/store";
+import { Database } from "@/types/supabase";
+import { useAtom } from "jotai";
+import { useRouter } from "next/navigation";
 
-type TicketType = Database['public']['Tables']['ticket_types']['Row'];
+type TicketType = Database["public"]["Tables"]["ticket_types"]["Row"];
 
 interface TicketSelectionProps {
   ticketTypes: TicketType[];
@@ -34,12 +37,12 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
     }));
   };
 
-  const incrementQuantity = (ticketTypeId: string) => {
+  const _incrementQuantity = (ticketTypeId: string) => {
     const currentQuantity = selection[ticketTypeId] || 0;
     handleQuantityChange(ticketTypeId, currentQuantity + 1);
   };
 
-  const decrementQuantity = (ticketTypeId: string) => {
+  const _decrementQuantity = (ticketTypeId: string) => {
     const currentQuantity = selection[ticketTypeId] || 0;
     handleQuantityChange(ticketTypeId, currentQuantity - 1);
   };
@@ -58,13 +61,13 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
   const handleProceedToCheckout = () => {
     // Store the ticket selection and proceed to checkout
     if (getTotalQuantity() > 0) {
-      router.push('/events/checkout');
+      router.push("/events/checkout");
     }
   };
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-bold">{t('common.selectTickets', language)}</h3>
+      <h3 className="text-xl font-bold">{t("common.selectTickets", language)}</h3>
 
       <div className="space-y-4">
         {ticketTypes.map((ticket) => (
@@ -76,9 +79,7 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
             <CardContent className="flex-grow">
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold">¥{ticket.price.toLocaleString()}</span>
-                <Badge variant="secondary">
-                  {ticket.available_seats} seats available
-                </Badge>
+                <Badge variant="secondary">{ticket.available_seats} seats available</Badge>
               </div>
             </CardContent>
             <CardFooter>
@@ -92,14 +93,13 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
         <Card>
           <CardContent className="p-4">
             <div className="flex justify-between items-center py-2">
-              <span className="font-medium">{t('common.total', language)}:</span>
+              <span className="font-medium">{t("common.total", language)}:</span>
               <span className="font-bold text-lg">${(getTotalPrice() / 100).toFixed(2)}</span>
             </div>
           </CardContent>
           <CardFooter className="p-4 pt-0">
             <Button className="w-full" size="lg" onClick={handleProceedToCheckout}>
-              <Ticket className="mr-2 h-4 w-4" />
-              {t('common.proceedToCheckout', language)}
+              Proceed to Checkout
             </Button>
           </CardFooter>
         </Card>

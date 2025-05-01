@@ -1,12 +1,12 @@
 'use client';
 
-import { getEvents } from '@/lib/supabase';
 import { EventCard } from '@/components/events/event-card';
-import { useAtom } from 'jotai';
-import { languageAtom } from '@/lib/store';
 import { t } from '@/lib/i18n';
-import { useEffect, useState } from 'react';
+import { languageAtom } from '@/lib/store';
+import { getEvents } from '@/lib/supabase';
 import { Database } from '@/types/supabase';
+import { useAtom } from 'jotai';
+import { useEffect, useState } from 'react';
 
 type Event = Database['public']['Tables']['events']['Row'] & {
   ticket_types: Database['public']['Tables']['ticket_types']['Row'][];

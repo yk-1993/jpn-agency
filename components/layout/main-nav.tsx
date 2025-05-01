@@ -1,11 +1,11 @@
 'use client';
 
-import Link from 'next/link';
-import { useAtom } from 'jotai';
-import { languageAtom } from '@/lib/store';
 import { Button } from '@/components/ui/button';
-import { Globe } from 'lucide-react';
 import { t } from '@/lib/i18n';
+import { languageAtom } from '@/lib/store';
+import { useAtom } from 'jotai';
+import { Globe } from 'lucide-react';
+import Link from 'next/link';
 
 export function MainNav() {
   const [language, setLanguage] = useAtom(languageAtom);
