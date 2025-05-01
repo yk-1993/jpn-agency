@@ -10,6 +10,7 @@ import { languageAtom } from '@/lib/store';
 import { Database } from '@/types/supabase';
 import { CalendarDays, MapPin } from 'lucide-react';
 import { t } from '@/lib/i18n';
+import Image from 'next/image';
 
 type Event = Database['public']['Tables']['events']['Row'] & {
   ticket_types: Database['public']['Tables']['ticket_types']['Row'][];
@@ -40,18 +41,21 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
       <div className="aspect-video relative overflow-hidden">
-        <img
+        <Image
           src={
             event.image_url ||
             'https://images.pexels.com/photos/3800541/pexels-photo-3800541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
           }
-          alt={language === 'zn' ? event.name : event.name_jpn || event.name}
+          alt={language === 'zn' ? event.name : event.name_ja || event.name}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          width={1260}
+          height={750}
+          priority
         />
       </div>
       <CardContent className="p-4">
         <h3 className="text-lg font-bold mb-1 line-clamp-2">
-          {language === 'zn' ? event.name : event.name_jpn || event.name}
+          {language === 'zn' ? event.name : event.name_ja || event.name}
         </h3>
         <div className="flex items-center text-muted-foreground text-sm mb-2">
           <CalendarDays className="h-4 w-4 mr-1" />

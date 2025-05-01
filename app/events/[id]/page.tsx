@@ -4,6 +4,7 @@ import { getEvent } from '@/lib/supabase';
 import { TicketSelection } from '@/components/events/ticket-selection';
 import { CalendarDays, Clock, MapPin } from 'lucide-react';
 import { LanguageToggle } from '@/components/events/language-toggle';
+import Image from 'next/image';
 
 export const revalidate = 60; // Revalidate every minute
 
@@ -38,13 +39,16 @@ export default async function EventPage({ params }: EventPageProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-6">
             <div className="aspect-video rounded-lg overflow-hidden">
-              <img
+              <Image
                 src={
                   event.image_url ||
                   'https://images.pexels.com/photos/3800541/pexels-photo-3800541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
                 }
                 alt={event.name}
                 className="w-full h-full object-cover"
+                width={1260}
+                height={750}
+                priority
               />
             </div>
 

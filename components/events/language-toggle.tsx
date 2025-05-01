@@ -10,7 +10,7 @@ export function LanguageToggle() {
   const [language, setLanguage] = useAtom(languageAtom);
 
   const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'zh' : 'en');
+    setLanguage(language === 'zn' ? 'ja' : 'zn');
   };
 
   // Update all elements with data-language attributes when language changes
@@ -30,7 +30,7 @@ export function LanguageToggle() {
       className="flex items-center gap-2"
     >
       <Globe className="h-4 w-4" />
-      {language === 'en' ? '中文' : 'English'}
+      {language === 'zn' ? '日本語' : '中文'}
     </Button>
   );
 }
