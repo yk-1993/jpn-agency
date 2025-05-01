@@ -12,31 +12,7 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
 import { t } from '@/lib/i18n';
-
-interface OrderItem {
-  id: string;
-  ticket_type: {
-    id: string;
-    name: string;
-    name_ja: string;
-    name_zh: string;
-    price: number;
-    event_id: string;
-  };
-  quantity: number;
-  unit_price: number;
-}
-
-interface Order {
-  id: string;
-  status: string;
-  order_items: OrderItem[];
-  total_amount: number;
-  created_at: string;
-  customer_name: string;
-  customer_email: string;
-  customer_phone: string;
-}
+import { Order, OrderItem } from '@/types/orders';
 
 export default function OrderDetailsPage() {
   const router = useRouter();
@@ -161,11 +137,9 @@ export default function OrderDetailsPage() {
                         {t('orders.date', language)}
                       </p>
                       <p>
-                        {format(
-                          new Date(order.created_at),
-                          language === 'zh' ? 'MMMM d, yyyy' : 'yyyy年MM月dd日',
-                          { locale: language === 'zh' ? zhTW : undefined }
-                        )}
+                        {format(new Date(order.created_at), t('common.dateFormat', language), {
+                          locale: language === 'zh' ? zhTW : undefined,
+                        })}
                       </p>
                     </div>
                   </div>

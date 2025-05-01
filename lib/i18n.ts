@@ -35,7 +35,7 @@ export function t(key: string, locale: Locale): string {
 
   if (typeof current !== 'string') {
     console.error(`Translation value is not a string for key: ${key} in locale ${locale}`);
-    console.error(`Current value:`, current);
+    console.error('Current value:', current);
     return key;
   }
 
