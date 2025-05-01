@@ -14,6 +14,7 @@ import { t } from "@/lib/i18n";
 import { languageAtom, ticketSelectionAtom } from "@/lib/store";
 import { Database } from "@/types/supabase";
 import { useAtom } from "jotai";
+import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 type TicketType = Database["public"]["Tables"]["ticket_types"]["Row"];
@@ -37,12 +38,12 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
     }));
   };
 
-  const _incrementQuantity = (ticketTypeId: string) => {
+  const incrementQuantity = (ticketTypeId: string) => {
     const currentQuantity = selection[ticketTypeId] || 0;
     handleQuantityChange(ticketTypeId, currentQuantity + 1);
   };
 
-  const _decrementQuantity = (ticketTypeId: string) => {
+  const decrementQuantity = (ticketTypeId: string) => {
     const currentQuantity = selection[ticketTypeId] || 0;
     handleQuantityChange(ticketTypeId, currentQuantity - 1);
   };
@@ -82,8 +83,29 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
                 <Badge variant="secondary">{ticket.available_seats} seats available</Badge>
               </div>
             </CardContent>
-            <CardFooter>
-              <Button className="w-full">Select Ticket</Button>
+            <CardFooter className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => decrementQuantity(ticket.id)}
+                  disabled={!selection[ticket.id]}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <span className="w-8 text-center">{selection[ticket.id] || 0}</span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => incrementQuantity(ticket.id)}
+                  disabled={selection[ticket.id] === 10}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <span className="font-medium">
+                ¥{((selection[ticket.id] || 0) * ticket.price).toLocaleString()}
+              </span>
             </CardFooter>
           </Card>
         ))}
@@ -94,12 +116,12 @@ export function TicketSelection({ ticketTypes }: TicketSelectionProps) {
           <CardContent className="p-4">
             <div className="flex justify-between items-center py-2">
               <span className="font-medium">{t("common.total", language)}:</span>
-              <span className="font-bold text-lg">${(getTotalPrice() / 100).toFixed(2)}</span>
+              <span className="font-bold text-lg">¥{getTotalPrice().toLocaleString()}</span>
             </div>
           </CardContent>
           <CardFooter className="p-4 pt-0">
             <Button className="w-full" size="lg" onClick={handleProceedToCheckout}>
-              Proceed to Checkout
+              {t("common.proceedToCheckout", language)}
             </Button>
           </CardFooter>
         </Card>

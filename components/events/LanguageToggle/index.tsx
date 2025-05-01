@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { languageAtom } from "@/lib/store";
 import { useAtom } from "jotai";
+import { Languages } from "lucide-react";
 import { useEffect } from "react";
 
 export function LanguageToggle() {
@@ -23,7 +24,8 @@ export function LanguageToggle() {
   }, [language]);
 
   return (
-    <Button variant="outline" size="sm" onClick={toggleLanguage} className="w-[60px]">
+    <Button variant="outline" size="sm" onClick={toggleLanguage} className="w-[80px] gap-2">
+      <Languages className="h-4 w-4" />
       {language === "zh" ? "日本語" : "中文"}
     </Button>
   );

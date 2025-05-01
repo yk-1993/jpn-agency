@@ -1,28 +1,29 @@
-import type { StorybookConfig } from '@storybook/nextjs';
+import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
-  stories: ['../components/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ["../**/*.mdx", "../**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/test',
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-onboarding",
+    "@storybook/addon-interactions",
   ],
   framework: {
-    name: '@storybook/nextjs',
-    options: {
-      builder: {
-        useSWC: true,
-      },
-    },
+    name: "@storybook/nextjs",
+    options: {},
   },
   docs: {
-    autodocs: true,
+    autodocs: "tag",
   },
-  core: {
-    disableTelemetry: true,
+  webpackFinal: async (config) => {
+    if (config.resolve) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "next/navigation": require.resolve("../.storybook/mocks/next-navigation.ts"),
+      };
+    }
+    return config;
   },
-  staticDirs: ['../public'],
 };
 
 export default config;
